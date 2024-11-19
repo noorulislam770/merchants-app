@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'merchants_app.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default':
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         dj_database_url.config(default='sqlite:///db.sqlite3')
-    }
+
 }
 
 
