@@ -1,78 +1,45 @@
-<script>
-    function showPopupMessage(message, type = 'success') {
-        const popup = document.getElementById('popup-message');
-
-        // Set the message and type (success or error)
-        popup.textContent = message;
-        popup.className = ''; // Reset classes
-        popup.classList.add(type === 'error' ? 'error' : 'success');
-
-        // Show the popup with fade-in effect
-        popup.style.opacity = '1';
-        popup.style.transform = 'translateY(0)';
-        popup.classList.remove('hidden');
-
-        // Fade out and hide after 3 seconds
-        setTimeout(() => {
-            popup.style.opacity = '0';
-            popup.style.transform = 'translateY(-20px)';
-            setTimeout(() => popup.classList.add('hidden'), 500); // Wait for transition
-        }, 3000);
-    }
-</script>
-
-
-<div id="popup-message" class="hidden"></div>
+<!-- Your alert message HTML -->
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show custom-alert" role="alert">
+    {{ message }}
+</div>
 
 <style>
-    #popup-message {
+    /* Position the alert in the bottom-right corner */
+    .custom-alert {
         position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        /* Ensures the alert is above other content */
+        opacity: 1;
+        transition: opacity 2s ease-in-out;
+        /* Smooth fading effect */
+    }
+
+    /* Optional: style the alert to make it look better */
+    .custom-alert .btn-close {
+        position: absolute;
         top: 10px;
         right: 10px;
-        background-color: #28a745;
-        /* Green background for success */
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: bold;
+    }
+
+    /* Hide the alert once the transition ends */
+    .custom-alert.fade-out {
         opacity: 0;
-        /* Initially hidden */
-        transition: opacity 0.5s ease, transform 0.5s ease;
-        z-index: 1000;
-        /* Ensure it is above other elements */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    #popup-message.error {
-        background-color: #dc3545;
-        /* Red background for errors */
-    }
-
-    .hidden {
-        display: none;
-        /* Hide the element when not needed */
     }
 </style>
 
-<script>
-    function showPopupMessage(message, type = 'success') {
-        const popup = document.getElementById('popup-message');
 
-        // Set the message and type (success or error)
-        popup.textContent = message;
-        popup.className = ''; // Reset classes
-        popup.classList.add(type === 'error' ? 'error' : 'success');
+<script script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if there are any alerts on the page
+        const alert = document.querySelector('.custom-alert');
 
-        // Show the popup with fade-in effect
-        popup.style.opacity = '1';
-        popup.style.transform = 'translateY(0)';
-        popup.classList.remove('hidden');
-
-        // Fade out and hide after 3 seconds
-        setTimeout(() => {
-            popup.style.opacity = '0';
-            popup.style.transform = 'translateY(-20px)';
-            setTimeout(() => popup.classList.add('hidden'), 500); // Wait for transition
-        }, 3000);
-    }
+        if (alert) {
+            // Set a timeout to trigger fade-out effect after 2 seconds
+            setTimeout(function () {
+                alert.classList.add('fade-out');
+            }, 3000);
+        }
+    });
 </script>

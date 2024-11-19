@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h2>{{ form.instance.pk|yesno:"Edit Customer,Add Customer" }}</h2>
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete customer "{{ customer.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-danger">Delete</button>
         <a href="{% url 'customer_list' %}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>

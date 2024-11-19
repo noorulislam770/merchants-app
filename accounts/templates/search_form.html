@@ -1,0 +1,23 @@
+<form method="GET" action="{% url 'search_results' %}">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="customer" placeholder="Search by Customer Name">
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="sales_person" placeholder="Search by Sales Person">
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="type" placeholder="Search by Transaction Type">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="description" placeholder="Search by Description">
+        </div>
+        <div class="col-md-3">
+            <!-- <span>Date</span> -->
+            <input type="date" class=" form-control" id="date" name="date">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>

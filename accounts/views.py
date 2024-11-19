@@ -4,13 +4,19 @@ from .forms import TransactionForm, CustomerForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+
 # Create your views here.
 
 
 @login_required(login_url='/login/')
 def dashboard(request):
-    transaction = Transaction.objects.all().order_by('-date_time')
-    paginator = Paginator(transaction, 2)
+
+    today = timezone.localdate()
+
+    transaction = Transaction.objects.filter(
+        date_time__date=today).order_by('-date_time')
+    paginator = Paginator(transaction, 20)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -23,6 +29,7 @@ def dashboard(request):
         'total_income': total_income,
         'total_expense': total_expense,
         'total_credit': total_credit,
+        'today': today
     }
 
     transaction_types = Transaction.TRANSACTION_TYPES
