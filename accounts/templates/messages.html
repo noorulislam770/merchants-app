@@ -1,0 +1,78 @@
+<script>
+    function showPopupMessage(message, type = 'success') {
+        const popup = document.getElementById('popup-message');
+
+        // Set the message and type (success or error)
+        popup.textContent = message;
+        popup.className = ''; // Reset classes
+        popup.classList.add(type === 'error' ? 'error' : 'success');
+
+        // Show the popup with fade-in effect
+        popup.style.opacity = '1';
+        popup.style.transform = 'translateY(0)';
+        popup.classList.remove('hidden');
+
+        // Fade out and hide after 3 seconds
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            popup.style.transform = 'translateY(-20px)';
+            setTimeout(() => popup.classList.add('hidden'), 500); // Wait for transition
+        }, 3000);
+    }
+</script>
+
+
+<div id="popup-message" class="hidden"></div>
+
+<style>
+    #popup-message {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: #28a745;
+        /* Green background for success */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        opacity: 0;
+        /* Initially hidden */
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        z-index: 1000;
+        /* Ensure it is above other elements */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #popup-message.error {
+        background-color: #dc3545;
+        /* Red background for errors */
+    }
+
+    .hidden {
+        display: none;
+        /* Hide the element when not needed */
+    }
+</style>
+
+<script>
+    function showPopupMessage(message, type = 'success') {
+        const popup = document.getElementById('popup-message');
+
+        // Set the message and type (success or error)
+        popup.textContent = message;
+        popup.className = ''; // Reset classes
+        popup.classList.add(type === 'error' ? 'error' : 'success');
+
+        // Show the popup with fade-in effect
+        popup.style.opacity = '1';
+        popup.style.transform = 'translateY(0)';
+        popup.classList.remove('hidden');
+
+        // Fade out and hide after 3 seconds
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            popup.style.transform = 'translateY(-20px)';
+            setTimeout(() => popup.classList.add('hidden'), 500); // Wait for transition
+        }, 3000);
+    }
+</script>

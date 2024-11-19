@@ -7,11 +7,53 @@
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <a class="navbar-brand" href="#">Merchant Dashboard</a>
+        <div class="ms-auto d-flex align-items-center">
+            <span class="me-3">Logged in as: <strong>{{ user.username }}</strong></span>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+            </form>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <h1>Merchant Dashboard</h1>
+
+
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+
+
+
         <p><strong>Total Income:</strong> {{ total_income }}</p>
-        <p><strong>Total Expenses:</strong> {{ total_expenses }}</p>
+        <p><strong>Total Expenses:</strong> {{ total_expense }}</p>
         <p><strong>Total Outstanding Credit:</strong> {{ total_credit }}</p>
+
+        <!-- form for getting getting new sale  -->
+        <div class="add-transaction">
+            <h2>Add Transaction</h2>
+            <form class="form-inline row" method="POST" action="/add_transaction" class="inline-form">
+                {% csrf_token %}
+                <input class="form-control col" type="text" name="customer" placeholder="Customer Name" required>
+                <input class="form-control col" type="number" name="amount" placeholder="Amount" step="0.01" required>
+                <select class="form-control col" name="type" required>
+                    {% for type in transaction_types %}
+                    <option value="{{ type.0 }}">{{ type.1 }}</option>
+                    {% endfor %}
+                </select>
+                <input class="form-control col" type="text" name="description" placeholder="Description" required>
+                <button class="btn btn-primary col" type="submit">Add</button>
+            </form>
+        </div>
+
+
 
         <h2>Transactions</h2>
         <table class="table">
@@ -21,20 +63,37 @@
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Description</th>
+                    <th>Customer</th>
+                    <th>Sales Person</th>
                 </tr>
             </thead>
             <tbody>
-                {% for transaction in transactions %}
+                {% for transaction in page_obj %}
                 <tr>
                     <td>{{ transaction.type }}</td>
                     <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.date }}</td>
+                    <td>{{ transaction.date_time }}</td>
                     <td>{{ transaction.description }}</td>
+                    <td>{{ transaction.customer.name }}</td>
+                    <td>{{ transaction.salesperson.username }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <!-- Pagination Navigation -->
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
     </div>
+
 </body>
 
 </html>
