@@ -67,7 +67,11 @@ def transaction_details(request, id):
 
 @login_required
 def search(request):
-    return render(request, 'search.html')
+    transaction_types = Transaction.TRANSACTION_TYPES
+    context = {
+        'transaction_types': transaction_types
+    }
+    return render(request, 'search.html', context)
 
 
 @login_required
@@ -91,6 +95,7 @@ def search_results(request):
         transactions = transactions.filter(description__icontains=description)
     if date:
         transactions = transactions.filter(date_time__date=date)
+    transaction_types = Transaction.TRANSACTION_TYPES
 
     context = {
         'transactions': transactions,
@@ -99,6 +104,7 @@ def search_results(request):
         'type': type,
         'description': description,
         'date': date,
+        'transaction_types': transaction_types
     }
 
     return render(request, 'search_results.html', context)

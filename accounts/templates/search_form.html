@@ -4,10 +4,24 @@
             <input type="text" class="form-control" name="customer" placeholder="Search by Customer Name">
         </div>
         <div class="col-md-4">
-            <input type="text" class="form-control" name="sales_person" placeholder="Search by Sales Person">
+            <select id="salesperson" name="salesperson" class="form-select">
+                <option value="">Sales Man(All)</option>
+                {% for salesperson in salespersons %}
+                <option value="{{ salesperson.id }}"
+                    {% if request.GET.salesperson == salesperson.id|stringformat:"s" %}selected{% endif %}>
+                    {{ salesperson.get_full_name|default:salesperson.username }}
+                </option>
+                {% endfor %}
+            </select>
         </div>
         <div class="col-md-4">
-            <input type="text" class="form-control" name="type" placeholder="Search by Transaction Type">
+
+            <select id="type" name="type" class="form-select">
+                <option value="">Transaction Type (All)</option>
+                {% for key, value in transaction_types %}
+                <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
         </div>
     </div>
     <div class="row mb-3">

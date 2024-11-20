@@ -5,10 +5,10 @@
         <a href="/search" class="btn btn-outline-primary btn-sm me-3">search</a>
         <span class="me-3"> <strong>{{ user.username }}</strong></span>
         <form method="get" action="/login/" class="d-flex align-items-center">
-            <label for="salespersonSelect" class="me-2">Login as:</label>
+            <!-- <label for="salespersonSelect" class="me-2">Login as:</label> -->
             <select name="username_prefill" id="salespersonSelect" class="form-select me-2"
                 onchange="this.form.submit();">
-                <option value="" selected disabled>Choose a salesperson</option>
+                <option value="" selected disabled>Switch Salesperson</option>
                 {% for salesperson in salespersons %}
                 <option value="{{ salesperson.username }}">
                     {{ salesperson.username }}
