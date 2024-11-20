@@ -25,4 +25,9 @@ urlpatterns = [
 
 
     path('transactions/', transactions_page, name='transactions_page'),
+
+
+    path('credit-management/', credit_management, name='credit_management'),
+    path('credit-management/<int:pk>/',
+         mark_credit_paid, name='mark_credit_paid'),
 ]

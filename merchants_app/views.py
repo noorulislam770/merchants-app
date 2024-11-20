@@ -262,3 +262,53 @@ def transactions_page(request):
         'salespersons': salespersons,
     }
     return render(request, 'transactions_page.html', context)
+
+
+@login_required
+def credit_management(request):
+    credits = Transaction.objects.all()
+
+    # Filters
+    status = request.GET.get('status')
+    customer = request.GET.get('customer')
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    search_query = request.GET.get('search')
+
+    if status == "paid":
+        credits = credits.filter(is_paid=True)
+    elif status == "not_paid":
+        credits = credits.filter(is_paid=False)
+
+    if customer:
+        credits = credits.filter(customer__name__icontains=customer)
+
+    if start_date and end_date:
+        credits = credits.filter(payment_date__range=[start_date, end_date])
+
+    if search_query:
+        credits = credits.filter(
+            Q(id__icontains=search_query) |
+            Q(customer__name__icontains=search_query)
+        )
+
+    # Sorting
+    sort_by = request.GET.get('sort', 'id')
+    credits = credits.order_by(sort_by)
+
+    # Pagination
+    paginator = Paginator(credits, 10)  # Show 10 items per page
+    page_number = request.GET.get('page')
+    credits = paginator.get_page(page_number)
+
+    context = {'credits': credits}
+
+    return render(request, 'credit_management.html', context)
+
+
+def mark_credit_paid(request, pk):
+    credit = get_object_or_404(Transaction, id=pk)
+    credit.is_paid = True
+    credit.payment_date = timezone.now()
+    credit.save()
+    return redirect('credit_management')

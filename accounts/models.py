@@ -39,6 +39,10 @@ class Transaction (models.Model):
         related_name='transactions_as_edited_by'
     )
     is_edited = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
+    payment_date = models.DateTimeField(null=True, blank=True)
+    paid_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.type.capitalize()} - {self.amount}"

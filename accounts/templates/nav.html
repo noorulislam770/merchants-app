@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
     <a class="navbar-brand" href="/">Merchant Dashboard</a>
     <div class="ms-auto d-flex align-items-center">
+        <a class="btn btn-outline-secondary btn-sm me-3" href="{% url 'credit_management' %}">Credit Management</a>
         <a href="/transactions" class="btn btn-outline-primary btn-sm me-3">Transactions</a>
         <a href="/search" class="btn btn-outline-primary btn-sm me-3">search</a>
         <span class="me-3"> <strong>{{ user.username }}</strong></span>

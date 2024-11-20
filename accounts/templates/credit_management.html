@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Credit Management</h2>
+
+    <!-- Filtering Section -->
+    <form method="get" class="row g-3 align-items-center mb-4">
+        <div class="col-auto">
+            <label for="filter-status" class="form-label">Payment Status:</label>
+            <select name="status" id="filter-status" class="form-select">
+                <option value="">All</option>
+                <option value="paid" {% if request.GET.status == "paid" %}selected{% endif %}>Paid</option>
+                <option value="not_paid" {% if request.GET.status == "not_paid" %}selected{% endif %}>Not Paid</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="filter-customer" class="form-label">Customer:</label>
+            <input type="text" name="customer" id="filter-customer" class="form-control" placeholder="Customer Name"
+                value="{{ request.GET.customer }}">
+        </div>
+        <div class="col-auto">
+            <label for="filter-start-date" class="form-label">Start Date:</label>
+            <input type="date" name="start_date" id="filter-start-date" class="form-control"
+                value="{{ request.GET.start_date }}">
+        </div>
+        <div class="col-auto">
+            <label for="filter-end-date" class="form-label">End Date:</label>
+            <input type="date" name="end_date" id="filter-end-date" class="form-control"
+                value="{{ request.GET.end_date }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="{% url 'credit_management' %}" class="btn btn-secondary">Reset</a>
+        </div>
+    </form>
+
+    <!-- Search Bar -->
+
+
+    <!-- Credits Table -->
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?{% if request.GET.sort == 'id' %}sort=-id{% else %}sort=id{% endif %}">
+                        ID {% if request.GET.sort == 'id' %}▲{% elif request.GET.sort == '-id' %}▼{% endif %}
+                    </a>
+                </th>
+                <th>Customer</th>
+                <th>
+                    <a href="?{% if request.GET.sort == 'amount' %}sort=-amount{% else %}sort=amount{% endif %}">
+                        Amount
+                        {% if request.GET.sort == 'amount' %}▲{% elif request.GET.sort == '-amount' %}▼{% endif %}
+                    </a>
+                </th>
+                <th>Status</th>
+                <th>
+                    <a
+                        href="?{% if request.GET.sort == 'payment_date' %}sort=-payment_date{% else %}sort=payment_date{% endif %}">
+                        Payment Date
+                        {% if request.GET.sort == 'payment_date' %}▲{% elif request.GET.sort == '-payment_date' %}▼{% endif %}
+                    </a>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for credit in credits %}
+            <tr>
+                <td>{{ credit.id }}</td>
+                <td><a href="{% url 'customer_details' credit.customer.id %}"> {{ credit.customer.name }}</a></td>
+                <td>{{ credit.amount }}</td>
+                <td>{% if credit.is_paid %}Paid{% else %}Not Paid{% endif %}</td>
+                <td>{% if credit.is_paid %} {{ credit.payment_date|date:"Y-m-d H:i"}} {% endif %}</td>
+                <td>
+                    {% if not credit.is_paid %}
+                    <a href="{% url 'mark_credit_paid' credit.id %}" class="btn btn-success btn-sm">Mark as Paid</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if credits.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ credits.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+            {% for page_num in credits.paginator.page_range %}
+            <li class="page-item {% if page_num == credits.number %}active{% endif %}">
+                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+            {% if credits.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ credits.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% endblock content %}
