@@ -312,3 +312,7 @@ def mark_credit_paid(request, pk):
     credit.payment_date = timezone.now()
     credit.save()
     return redirect('credit_management')
+
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
