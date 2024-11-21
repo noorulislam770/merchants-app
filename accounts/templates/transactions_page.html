@@ -99,7 +99,11 @@
                 {% for transaction in page_obj %}
                 <tr>
                     <td>{{ transaction.id }}</td>
-                    <td>{{ transaction.get_type_display }}</td>
+                    <td>{{ transaction.get_type_display }}
+                        {% if transaction.type == 'credit' %}
+                        /
+                        {% if transaction.is_paid %}Paid{% else %}Not Paid{% endif %}
+                        {% endif %} </td>
                     <td>PKR {{ transaction.amount }}</td>
                     <td>{{ transaction.customer.name }}</td>
                     <td>{{ transaction.salesperson.get_full_name|default:transaction.salesperson.username }}</td>
