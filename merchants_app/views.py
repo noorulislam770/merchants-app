@@ -266,7 +266,7 @@ def transactions_page(request):
 
 @login_required
 def credit_management(request):
-    credits = Transaction.objects.all()
+    credits = Transaction.objects.filter(type='credit').order_by('-date_time')
 
     # Filters
     status = request.GET.get('status')

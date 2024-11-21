@@ -1,0 +1,40 @@
+<footer class="bg-light text-center text-lg-start mt-4 border-top" style="position:relative; bottom: 0; width: 100;">
+    <div class="container p-4">
+        <!-- About Section -->
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">About the Application</h5>
+                <p>
+                    This application helps local merchants transition from traditional pen-and-paper accounting to an
+                    efficient digital system.
+                    Easily manage sales, expenses, and credit transactions in one place.
+                </p>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-dark">Home</a></li>
+                    <li><a href="{% url 'transactions_page' %}" class="text-dark">Transactions</a></li>
+                    <li><a href="{% url 'credit_management' %}" class="text-dark">Credit Management</a></li>
+                    <li><a href="{% url 'customer_list' %}" class="text-dark">Customers</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Contact</h5>
+                <ul class="list-unstyled">
+                    <li><span class="text-dark">Email:</span> support@localmerchantapp.com</li>
+                    <li><span class="text-dark">Phone:</span> +92 123 456 789</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center p-3 bg-dark text-white">
+        © 2024 Local Merchant App | All Rights Reserved
+    </div>
+</footer>

@@ -45,7 +45,7 @@
             <tr>
                 <th>
                     <a href="?{% if request.GET.sort == 'id' %}sort=-id{% else %}sort=id{% endif %}">
-                        ID {% if request.GET.sort == 'id' %}▲{% elif request.GET.sort == '-id' %}▼{% endif %}
+                        Tr.ID {% if request.GET.sort == 'id' %}▲{% elif request.GET.sort == '-id' %}▼{% endif %}
                     </a>
                 </th>
                 <th>Customer</th>
@@ -69,7 +69,7 @@
         <tbody>
             {% for credit in credits %}
             <tr>
-                <td>{{ credit.id }}</td>
+                <td> <a href="{% url 'transaction_details' credit.id %"> {{ credit.id }} </a></td>
                 <td><a href="{% url 'customer_details' credit.customer.id %}"> {{ credit.customer.name }}</a></td>
                 <td>{{ credit.amount }}</td>
                 <td>{% if credit.is_paid %}Paid{% else %}Not Paid{% endif %}</td>
@@ -77,6 +77,8 @@
                 <td>
                     {% if not credit.is_paid %}
                     <a href="{% url 'mark_credit_paid' credit.id %}" class="btn btn-success btn-sm">Mark as Paid</a>
+                    {% else %}
+                    <a href="#" class="btn btn-disabled btn-sm">Paid</a>
                     {% endif %}
                 </td>
             </tr>

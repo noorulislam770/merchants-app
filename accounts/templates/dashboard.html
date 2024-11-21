@@ -61,7 +61,12 @@
                 <td><a href="{% url 'customer_details' transaction.customer.id %}">{{ transaction.customer.name }}</a>
                 </td>
                 <td>{{ transaction.description }}</td>
-                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.type }}
+                    {% if transaction.type == 'credit' %}
+                    /
+                    {% if transaction.is_paid %}Paid{% else %}Not Paid{% endif %}
+                    {% endif %}
+                </td>
                 <td>{{ transaction.date_time }}</td>
                 <td>{{ transaction.amount }}</td>
 

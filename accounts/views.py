@@ -20,9 +20,11 @@ def dashboard(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    total_income = sum(t.amount for t in transaction if t.type == 'sale')
+    total_income = sum(t.amount for t in transaction if t.type == 'sale' or (
+        t.type == 'credit' and t.is_paid == True))
     total_expense = sum(t.amount for t in transaction if t.type == 'expense')
-    total_credit = sum(t.amount for t in transaction if t.type == 'credit')
+    total_credit = sum(t.amount for t in transaction if t.type ==
+                       'credit' and t.is_paid == False)
 
     context = {
         # 'transactions': transaction,
